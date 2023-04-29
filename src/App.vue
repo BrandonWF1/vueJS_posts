@@ -1,27 +1,25 @@
 <template>
   <div class="container mx-auto">
     <modal-popup @createPost="createPost" v-model:visible="popupVisible" v-if="popupVisible"/>
-
     <div v-if="loading">Идет загрузка данных...</div>
+    <post-list />
 
-    <div>
-      <div v-for="post of posts">
-        {{post.title}}
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
 import ModalPopup from "@/components/ModalPopup.vue";
 import axios from "axios";
+import MyButton from "@/components/UI/MyButton.vue";
+import PostList from "@/components/PostList.vue";
+
 export default {
     components: {
-        ModalPopup,
+        ModalPopup, MyButton, PostList
     },
     data() {
         return {
-            popupVisible: true,
+            popupVisible: false,
             posts: [],
             loading: false
         }
@@ -33,7 +31,7 @@ export default {
     },
     async mounted() {
         this.loading = true
-        const response_data =  await axios({
+        const response_data = await axios({
             url: 'https://jsonplaceholder.typicode.com/posts?_limit=10',
             method: 'GET',
         })
