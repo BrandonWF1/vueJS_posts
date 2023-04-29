@@ -1,26 +1,48 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="container mx-auto">
+    <modal-popup @createPost="createPost" v-model:visible="popupVisible" v-if="popupVisible"/>
+
+    <div v-if="loading">Идет загрузка данных...</div>
+
+    <div>
+      <div v-for="post of posts">
+        {{post.title}}
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import ModalPopup from "@/components/ModalPopup.vue";
+import axios from "axios";
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+    components: {
+        ModalPopup,
+    },
+    data() {
+        return {
+            popupVisible: true,
+            posts: [],
+            loading: false
+        }
+    },
+    methods: {
+        createPost(post) {
+            this.posts = [...this.posts, post]
+        }
+    },
+    async mounted() {
+        this.loading = true
+        const response_data =  await axios({
+            url: 'https://jsonplaceholder.typicode.com/posts?_limit=10',
+            method: 'GET',
+        })
+        this.posts = response_data.data
+        this.loading = false
+    }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="scss" scoped>
+
 </style>
