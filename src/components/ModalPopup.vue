@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-full fixed top-0 left-0 bg-black bg-opacity-30">
+  <div class="w-full h-full fixed top-0 left-0 bg-black bg-opacity-30 z-50">
     <div
         class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white w-full max-w-2xl border-4 border-black rounded-xl shadow-2xl px-10 py-5">
       <close-icon

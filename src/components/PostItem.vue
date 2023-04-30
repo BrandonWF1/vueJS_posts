@@ -1,6 +1,6 @@
 <template>
-  <div class="border-black border-2 mb-2 w-full px-6 py-6 m-5">
-    <div class="flex flex-row">
+  <div class="border-green-200 border-opacity-80 border-4 rounded-xl w-full px-6 py-6 m-5 shadow-sm">
+    <div class="flex flex-row relative">
       <div class="flex flex-col w-2/3">
         <div class="text-2xl font-bold">
           {{ post.title }}
@@ -14,16 +14,30 @@
         <br>
         {{ post.id }}
       </div>
+      <div class="absolute -top-5 -right-5">
+        <close-icon
+            @click="deletePost(post_index)"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import CloseIcon from "@/components/UI/CloseIcon.vue";
 export default {
+    components:{
+        CloseIcon
+    },
     props:{
         post: {
             type: Object,
             required:true
+        }
+    },
+    methods: {
+        deletePost() {
+            this.$emit('deletePost', null)
         }
     }
 }
