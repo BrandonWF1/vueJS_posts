@@ -1,5 +1,5 @@
 <template>
-  <div class="border-green-200 border-opacity-80 border-4 rounded-xl w-full px-6 py-6 m-5 shadow-sm">
+  <div class="border-green-200 border-opacity-80 border-4 rounded-xl w-full px-6 py-6 m-5 shadow-sm hover:scale-105 hover:shadow-2xl duration-500">
     <div class="flex flex-row relative">
       <div class="flex flex-col w-2/3">
         <div class="text-2xl font-bold">

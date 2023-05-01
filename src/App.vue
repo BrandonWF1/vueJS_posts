@@ -1,11 +1,18 @@
 <template>
-  <div class="container mx-auto">
+  <div class="container mx-auto my-5 bg-white rounded-2xl">
     <modal-popup @createPost="createPost" v-model:visible="popupVisible" v-if="popupVisible"/>
-    <div v-if="loading">Идет загрузка данных...</div>
+    <header-component/>
+    <!--    <my-loader :loading="loading"/> -->
+    <!--    пока не могу придумать как заставить работать-->
+    <div v-if="loading" class="absolute top-[40%] left-[40%] -translate-x-1/2 -translate-y-1/2">
+      <img src="@/assets/spinner.gif" alt="spinner">
+    </div>
 
-    <div class="flex mt-8">
-      <post-list :posts="posts"/>
-
+    <div class="flex mt-4">
+      <div class="w-2/3">
+        <search-post @enterPosts="findPosts" :posts="posts"/>
+        <post-list :posts="filter_posts"/>
+      </div>
       <div class="flex flex-col items-center w-[35%] px-6 py-6">
         <div class="px-5 py-5 border-green-200 rounded-3xl border-2 hover:shadow-2xl duration-300">
           <div class="font-bold text-2xl text-center mb-5 border-red-50">
@@ -23,7 +30,7 @@
         </div>
       </div>
     </div>
-    <div class="mb-16 mt-5 text-center">
+    <div class="py-12 px-10 text-center">
       <my-button
           @click="loadMore">
         Загрузить еще...
@@ -33,19 +40,25 @@
 </template>
 
 <script>
-import ModalPopup from "@/components/ModalPopup.vue";
 import axios from "axios";
+import ModalPopup from "@/components/ModalPopup.vue";
 import MyButton from "@/components/UI/MyButton.vue";
 import PostList from "@/components/PostList.vue";
+import MyLoader from "@/components/UI/MyLoader.vue";
+import SearchPost from "@/components/SearchPost.vue";
+import HeaderComponent from "@/components/HeaderComponent.vue";
 
 export default {
     components: {
-        ModalPopup, MyButton, PostList
+        HeaderComponent,
+        SearchPost,
+        ModalPopup, MyButton, PostList, MyLoader
     },
     data() {
         return {
             popupVisible: false,
             posts: [],
+            filter_posts: [],
             limit: 10,
             page: 1,
             loading: false
@@ -55,11 +68,17 @@ export default {
         createPost(post) {
             this.posts = [...this.posts, post]
         },
-        async loadMore(){
-
+        findPosts(data) {
+            this.filter_posts = data
+        },
+        async loadMore() {
+            this.loading = true
             this.page++
             const response_data = await axios.get(`https://jsonplaceholder.typicode.com/posts?_limit=${this.limit}&_page=${this.page}`)
             this.posts.push(...response_data.data)
+            this.filter_posts.push(...response_data.data)
+            this.loading = false
+
         }
     },
     async mounted() {
@@ -70,11 +89,14 @@ export default {
         // })
         const response_data = await axios.get(`https://jsonplaceholder.typicode.com/posts?_limit=${this.limit}&_page=${this.page}`)
         this.posts = response_data.data
+        this.filter_posts.push(...response_data.data)
         this.loading = false
     }
 }
 </script>
 
-<style lang="scss" scoped>
-
+<style lang="scss">
+body {
+  background-color: rgba(234, 211, 239, 0.56);
+}
 </style>
