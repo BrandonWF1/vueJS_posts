@@ -1,5 +1,5 @@
 <template>
-  <div v-if="loading">
+  <div>
     <img src="@/assets/spinner.gif" alt="spinner">
     ИДЕТ ЗАГРУЗКА!!!!!!!!!!!!!!
   </div>
@@ -7,11 +7,6 @@
 
 <script>
 export default {
-    data(){
-        return{
-            loading:false
-        }
-    }
 
 }
 </script>

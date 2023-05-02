@@ -2,11 +2,8 @@
   <div class="container mx-auto my-5 bg-white rounded-2xl">
     <modal-popup @createPost="createPost" v-model:visible="popupVisible" v-if="popupVisible"/>
     <header-component/>
-    <!--    <my-loader :loading="loading"/> -->
-    <!--    пока не могу придумать как заставить работать-->
-    <div v-if="loading" class="absolute top-[40%] left-[40%] -translate-x-1/2 -translate-y-1/2">
-      <img src="@/assets/spinner.gif" alt="spinner">
-    </div>
+        <my-loader v-if="loading"/>
+
 
     <div class="flex mt-4">
       <div class="w-2/3">
@@ -67,6 +64,8 @@ export default {
     methods: {
         createPost(post) {
             this.posts = [...this.posts, post]
+            this.filter_posts=[...this.filter_posts,post]
+            this.popupVisible=false
         },
         findPosts(data) {
             this.filter_posts = data
