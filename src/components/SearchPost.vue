@@ -2,7 +2,7 @@
   <div class="flex flex-col pl-10">
     <div class="px-10 flex ">
       <img class="w-10 opacity-40" src="@/assets/search_logo.svg" alt="">
-      <input v-model="search" @input="getPost" class="focus:outline-none focus:border-0 w-full" type="text" placeholder="Поиск">
+      <input v-model="search" @input="getPost" class="focus:outline-none focus:border-0 w-full" type="text" placeholder="Search">
     </div>
     <hr class="text-center">
   </div>

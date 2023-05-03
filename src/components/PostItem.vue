@@ -1,5 +1,7 @@
 <template>
-  <div class="border-green-200 border-opacity-80 border-4 rounded-xl w-full px-6 py-6 m-5 shadow-sm hover:scale-105 hover:shadow-2xl duration-500">
+  <router-link :to="{name: 'detailed-post', params: {
+      id: post.id
+  }}" class="block border-green-200 border-opacity-80 border-4 rounded-xl w-full px-6 py-6 m-5 shadow-sm hover:scale-105 hover:shadow-2xl duration-500 cursor-pointer">
     <div class="flex flex-row relative">
       <div class="flex flex-col w-2/3">
         <div class="text-2xl font-bold">
@@ -20,12 +22,18 @@
         />
       </div>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script>
 import CloseIcon from "@/components/UI/CloseIcon.vue";
+import DetailPost from "@/pages/DetailPost.vue";
 export default {
+    computed: {
+        DetailPost() {
+            return DetailPost
+        }
+    },
     components:{
         CloseIcon
     },

@@ -2,7 +2,7 @@
   <div class="w-full">
     <div class="px-10">
       <div>
-        <post-item v-for="post in posts" :post="post"  @deletePost="deletePost(post_index)"/>
+        <post-item v-for="post in posts" :key="post.id" :post="post"  @deletePost="deletePost(post_index)"/>
       </div>
     </div>
 
